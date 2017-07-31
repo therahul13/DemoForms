@@ -1,0 +1,435 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Masterpage.master.cs" Inherits="Masterpage" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style id="stndz-style"></style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Metro, a sleek, intuitive, and powerful framework for faster and easier web development for Windows Metro Style." />
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, metro, front-end, frontend, web development" />
+    <meta name="author" content="Sergey Pimenov and Metro UI CSS contributors" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+    <title><a href="Home.aspx">Home.aspx</a>Task Tracker</title>
+    <link href="css/metro.css" rel="stylesheet" />
+    <link href="css/metro-icons.css" rel="stylesheet" />
+    <link href="css/metro-responsive.css" rel="stylesheet" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/metro.min.js"></script>
+    <link href="css/metro-schemes.min.css" rel="stylesheet" />
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+        }
+
+        .page-content {
+            padding-top: 3.125rem;
+            min-height: 100%;
+            height: 100%;
+        }
+
+        .table .input-control.checkbox {
+            line-height: 1;
+            min-height: 0;
+            height: auto;
+        }
+
+        @media screen and (max-width: 800px) {
+            #cell-sidebar {
+                flex-basis: 52px;
+            }
+
+            #cell-content {
+                flex-basis: calc(100% - 52px);
+            }
+        }
+    </style>
+    <script>
+        function pushMessage(t) {
+            var mes = 'Info|Implement independently';
+            $.Notify({
+                caption: mes.split("|")[0],
+                content: mes.split("|")[1],
+                type: t
+            });
+        }
+
+        $(function () {
+            $('.sidebar').on('click', 'li', function () {
+                if (!$(this).hasClass('active')) {
+                    $('.sidebar li').removeClass('active');
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+    <style type="text/css">
+        .backpack.dropzone {
+            font-family: 'SF UI Display', 'Segoe UI';
+            font-size: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 250px;
+            height: 150px;
+            font-weight: lighter;
+            color: white;
+            will-change: right;
+            z-index: 2147483647;
+            bottom: 20%;
+            background: #333;
+            position: fixed;
+            user-select: none;
+            transition: left .5s, right .5s;
+            right: 0px;
+        }
+
+            .backpack.dropzone .animation {
+                height: 80px;
+                width: 250px;
+                background: url("https://sxt.cdn.skype.com/assets/dropzone/hoverstate.png") left center;
+            }
+
+            .backpack.dropzone .title::before {
+                content: 'Save to';
+            }
+
+            .backpack.dropzone.closed {
+                right: -250px;
+            }
+
+            .backpack.dropzone.hover .animation {
+                animation: sxt-play-anim-hover 0.91s steps(21);
+                animation-fill-mode: forwards;
+                background: url("https://sxt.cdn.skype.com/assets/dropzone/hoverstate.png") left center;
+            }
+
+        @keyframes sxt-play-anim-hover {
+            from {
+                background-position: 0px;
+            }
+
+            to {
+                background-position: -5250px;
+            }
+        }
+
+        .backpack.dropzone.saving .title::before {
+            content: 'Saving to';
+        }
+
+        .backpack.dropzone.saving .animation {
+            background: url("https://sxt.cdn.skype.com/assets/dropzone/saving_loop.png") left center;
+            animation: sxt-play-anim-saving steps(59) 2.46s infinite;
+        }
+
+        @keyframes sxt-play-anim-saving {
+            100% {
+                background-position: -14750px;
+            }
+        }
+
+        .backpack.dropzone.saved .title::before {
+            content: 'Saved to';
+        }
+
+        .backpack.dropzone.saved .animation {
+            background: url("https://sxt.cdn.skype.com/assets/dropzone/saved.png") left center;
+            animation: sxt-play-anim-saved steps(20) 0.83s forwards;
+        }
+
+        @keyframes sxt-play-anim-saved {
+            100% {
+                background-position: -5000px;
+            }
+        }
+    </style>
+    <style>
+        /**.askemmy {					background: #fff url(chrome-extension://gllmlkidgbagkcikijiljllpdloelocn/logo_housefly_new.png) no-repeat right 5px bottom 5px;					background-size: 45px;				}				.askemmy {				    z-index: 10000;				    position: fixed;				    display: block;				    width: 350px;				    height: 145px;				    background-color: white;				    border-radius: 2px;				    box-shadow: rgb(133, 133, 133) 0px 0px 25px 1px;				    margin: 0 auto;				    text-align: center;				    margin-left: 35%;				    margin-top: 10%;				}				.askemmy p#msg { font-size: 1.1em; font-weight: 600; margin-top: 31px; margin-bottom: 20px;
+        }*/
+        .askemmy .error-msg {
+            color: #FF5600;
+            padding-top: 10px;
+        }
+
+        .askemmy .success-msg {
+            color: green;
+            padding-top: 10px;
+        }
+
+        .askemmy input {
+            padding: .5em .6em;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 3px #ddd;
+            border-radius: 4px;
+            vertical-align: middle;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            line-height: normal;
+            -webkit-appearance: textfield;
+            cursor: auto;
+        }
+
+            .askemmy input[type="submit"] {
+                font-family: inherit;
+                font-size: 100%;
+                padding: .5em 1em;
+                color: white;
+                font-weight: 600;
+                border: 1px solid #999;
+                border: 0 rgba(0,0,0,0);
+                background-color: rgba(31, 196, 255, .8);
+                text-decoration: none;
+                border-radius: 2px;
+                display: inline-block;
+                zoom: 1;
+                line-height: normal;
+                white-space: nowrap;
+                vertical-align: middle;
+                text-align: center;
+                cursor: pointer;
+                -webkit-user-drag: none;
+                -webkit-user-select: none;
+                user-select: none;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+        .askemmy .closebox {
+            display: inline-block;
+            height: 16px;
+            width: 16px;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+            cursor: pointer;
+            background: url(chrome-extension://gllmlkidgbagkcikijiljllpdloelocn/close_box.png);
+        }
+
+        .pop-up-report {
+            background: #fff url(chrome-extension://gllmlkidgbagkcikijiljllpdloelocn/logo_housefly_new.png) no-repeat right 5px bottom 5px;
+            background-size: 45px;
+        }
+
+        .pop-up-report {
+            z-index: 10000;
+            position: fixed;
+            display: block;
+            width: 400px;
+            height: 200px;
+            background-color: white;
+            border-radius: 2px;
+            box-shadow: rgb(133, 133, 133) 0px 0px 25px 1px;
+            margin: 0 auto;
+            text-align: left;
+            margin-left: 35%;
+            margin-top: 10%;
+            padding-left: 10px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            font-family: Arial,sans-serif;
+            font-size: 13px;
+        }
+
+            .pop-up-report textarea {
+                width: 380px;
+                height: 75px;
+                padding: .5em .6em;
+                display: inline-block;
+                border: 1px solid #ccc;
+                box-shadow: inset 0 1px 3px #ddd;
+                border-radius: 4px;
+                vertical-align: middle;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                line-height: normal;
+                -webkit-appearance: textarea;
+                cursor: auto;
+            }
+
+            .pop-up-report input[type="button"] {
+                font-family: Arial,sans-serif;
+                font-size: 100%;
+                padding: .5em 1em;
+                color: white;
+                font-weight: 600;
+                border: 1px solid #999;
+                border: 0 rgba(0,0,0,0);
+                background-color: rgba(31, 196, 255, .8);
+                text-decoration: none;
+                border-radius: 2px;
+                display: inline-block;
+                zoom: 1;
+                line-height: normal;
+                white-space: nowrap;
+                vertical-align: middle;
+                text-align: center;
+                cursor: pointer;
+                -webkit-user-drag: none;
+                -webkit-user-select: none;
+                user-select: none;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                margin-top: 5px;
+            }
+
+            .pop-up-report select {
+                background-color: rgb(221,221,221);
+                border: 1px solid #DDD;
+                border-radius: 4px 4px 4px 4px;
+                height: 25px;
+                width: 380px;
+                padding: 3px;
+            }
+
+            .pop-up-report select {
+                align-self: center;
+                text-align: center;
+            }
+
+        .alert_message_mc {
+            background: #fff url(chrome-extension://gllmlkidgbagkcikijiljllpdloelocn/logo_housefly_new.png) no-repeat right 5px bottom 5px;
+            background-size: 45px;
+        }
+
+        .alert_message_mc {
+            z-index: 10000;
+            position: fixed;
+            display: block;
+            width: 350px;
+            height: 145px;
+            background-color: white;
+            border-radius: 2px;
+            box-shadow: rgb(133, 133, 133) 0px 0px 25px 1px;
+            margin: 0 auto;
+            text-align: center;
+            margin-left: 35%;
+            margin-top: 10%;
+        }
+
+            .alert_message_mc p#msg {
+                padding-top: 60px;
+            }
+
+            .alert_message_mc p {
+                margin: auto;
+            }
+
+            .alert_message_mc .error-msg {
+                color: #FF5600;
+                padding-top: 10px;
+            }
+
+            .alert_message_mc .success-msg {
+                color: green;
+                padding-top: 10px;
+            }
+
+            .alert_message_mc input {
+                padding: .5em .6em;
+                display: inline-block;
+                border: 1px solid #ccc;
+                box-shadow: inset 0 1px 3px #ddd;
+                border-radius: 4px;
+                vertical-align: middle;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                line-height: normal;
+                -webkit-appearance: textfield;
+                cursor: auto;
+            }
+
+                .alert_message_mc input[type="submit"] {
+                    font-family: inherit;
+                    font-size: 100%;
+                    padding: .5em 1em;
+                    color: white;
+                    font-weight: 600;
+                    border: 1px solid #999;
+                    border: 0 rgba(0,0,0,0);
+                    background-color: rgba(31, 196, 255, .8);
+                    text-decoration: none;
+                    border-radius: 2px;
+                    display: inline-block;
+                    zoom: 1;
+                    line-height: normal;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                    text-align: center;
+                    cursor: pointer;
+                    -webkit-user-drag: none;
+                    -webkit-user-select: none;
+                    user-select: none;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                }
+
+            .alert_message_mc .closebox {
+                display: inline-block;
+                height: 16px;
+                width: 16px;
+                position: absolute;
+                right: 4px;
+                top: 4px;
+                cursor: pointer;
+                background: url(chrome-extension://gllmlkidgbagkcikijiljllpdloelocn/close_box.png);
+            }
+
+        #idSearchBar {
+            width: 130px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+            background-color:none;
+        }
+
+        #idSearchBar:focus{
+            width:20%;
+        }
+    </style>
+</head>
+<body class="bg-steel">
+    <div class="app-bar fixed-top darcula" data-role="appbar">
+        <a class="app-bar-element branding">Task Tracker</a>
+        <span class="app-bar-divider"></span>
+        <input name="search" placeholder="Search" id="idSearchBar" />
+        <div class="app-bar-element place-right">
+            <span class="dropdown-toggle"><span class="mif-cog"></span>User Name</span>
+            <div class="app-bar-drop-container padding10 place-right no-margin-top block-shadow fg-dark" data-role="dropdown" data-no-close="true" style="width: 220px">
+                <ul class="unstyled-list fg-dark">
+                    <li><a href="" class="fg-white1 fg-hover-yellow">Settings</a></li>
+                    <li><a href="LoginForm.aspx" class="fg-white3 fg-hover-yellow">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="app-bar-pullbutton automatic" style="display: none;"></div>
+        <div class="clearfix" style="width: 0;"></div>
+        <nav class="app-bar-pullmenu hidden flexstyle-app-bar-menu" style="display: none;">
+            <ul class="app-bar-pullmenubar hidden app-bar-menu"></ul>
+        </nav>
+    </div>
+    <div class="page-content">
+        <div class="flex-grid no-responsive-future" style="height: 100%;">
+            <div class="row" style="height: 100%">
+                <div class="cell size-x200" id="cell-sidebar" style="background-color: black; height: 100%">
+                    <ul class="v-menu darcula">
+                        <li class="menu-title">Task</li>
+                        <li><a href="#">Create Task</a></li>
+                        <li><a href="#">Open Task</a></li>
+                        <li><a href="#">Closed Task</a></li>
+                    </ul>
+                </div>
+                <asp:ContentPlaceHolder ID="placeHolder1" runat="server"></asp:ContentPlaceHolder>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
